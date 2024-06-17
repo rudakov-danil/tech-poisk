@@ -1,5 +1,12 @@
 "use client";
-import React, { memo, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./styles.module.css";
 import FiltersPopUp from "../FiltersPopUp/FiltersPopUp";
 import searchIcon from "@/assets/icons/search.png";
@@ -21,8 +28,10 @@ interface IFilterPanel {
   handleSearchInputChange: any;
   checkboxFilters: any;
   setCheckboxFilters: any;
-  priceFilters: any;
-  setPriceFilters: any;
+  minPriceFilters: string;
+  setMinPriceFilters: any;
+  maxPriceFilters: string;
+  setMaxPriceFilters: any;
   isModalWindow: boolean;
   setComponentsList: any;
   setPage: any;
@@ -77,8 +86,10 @@ export const FilterPanel = memo(function FilterPanel({
   searchTableName = "processor",
   checkboxFilters,
   setCheckboxFilters,
-  priceFilters,
-  setPriceFilters,
+  minPriceFilters,
+  setMinPriceFilters,
+  maxPriceFilters,
+  setMaxPriceFilters,
   isModalWindow,
   getComponents,
   handleSearchInputChange,
@@ -90,66 +101,8 @@ export const FilterPanel = memo(function FilterPanel({
   const [filterArr, setFilterArr] = useState<any | null>(null);
   const [filterId, setFilterId] = useState<number>(0);
 
-  const addFilterCheckbox = (
-    containerName: string,
-    filterName: string,
-    checked: boolean
-  ) => {
-    //////////////////// это часть кода нужна для того, чтобы уберать значение search в local storage searchInCatalog, для того чтобы при изменении фильтров, в запрос не вставало то что было в инпуте, иначе всё ломается
-    const prevLSData =
-      JSON.parse(String(localStorage.getItem("searchInCatalog")) || "") || {};
-
-    const componentTypeSlug = prevLSData.componentTypeSlug;
-    const componentType = prevLSData.componentType;
-    localStorage.setItem(
-      "searchInCatalog",
-      JSON.stringify({
-        componentTypeSlug: componentTypeSlug,
-        componentType: componentType,
-        search: "",
-      })
-    );
-    ///////////////////
-    setCheckboxFilters((prevFilters: any) => {
-      const updatedFilters: { [key: string]: string[] } = { ...prevFilters };
-
-      if (checked) {
-        if (Object.keys(updatedFilters).includes(containerName)) {
-          updatedFilters[containerName].push(filterName);
-        } else {
-          updatedFilters[containerName] = [filterName];
-        }
-      } else {
-        if (Object.keys(updatedFilters).length !== 0) {
-          const index = updatedFilters[containerName].indexOf(filterName);
-
-          updatedFilters[containerName].splice(index, 1);
-          if (updatedFilters[containerName].length === 0) {
-            delete updatedFilters[containerName];
-          }
-        }
-      }
-
-      return updatedFilters;
-    });
-  };
-
-  const handleCheckboxChange = (
-    container: string,
-    filterName: string,
-    checked: boolean
-  ) => {
-    addFilterCheckbox(container, filterName, checked);
-  };
-
-  function getDefaultCheckedState(containerName: string, filterName: string) {
-    if (checkboxFilters[containerName]?.includes(filterName)) {
-      return true;
-    }
-    return false;
-  }
   const divRef = useRef<HTMLDivElement | null>(null);
-  function updateCheckboxes() {
+  const updateCheckboxes = useCallback(() => {
     if (divRef.current !== null) {
       Array.from(divRef.current.querySelectorAll("input")).forEach((input) => {
         if (
@@ -161,12 +114,12 @@ export const FilterPanel = memo(function FilterPanel({
         }
       });
     }
-  }
+  }, [divRef, checkboxFilters]);
   useEffect(() => {
     updateCheckboxes();
   }, [checkboxFilters]);
 
-  function findFiltersId(searchTableName: string) {
+  const findFiltersId = useCallback((searchTableName: string) => {
     const ids: { [key: string]: number | number[] } = {
       motherboard: 1,
       processor: 2,
@@ -184,7 +137,7 @@ export const FilterPanel = memo(function FilterPanel({
     };
 
     return ids[searchTableName];
-  }
+  }, []);
 
   // const [data, setData] = useState<IFilterArr | null>(null);
   const [isMyLoading, setIsMyLoading] = useState(false);
@@ -206,7 +159,7 @@ export const FilterPanel = memo(function FilterPanel({
             JSON.parse(String(localStorage.getItem("searchInCatalog")) || "")
               .componentType ||
             ""
-        )}/?hideNonFilterProps=true&showValues=always`
+        )}/?hideNonFilterProps=true&showValues=always&showCount=true`
       );
       const data: IFilterArr | any = await respone.json();
 
@@ -229,53 +182,36 @@ export const FilterPanel = memo(function FilterPanel({
   useEffect(() => {
     refetch();
   }, []);
-  // В инпутах, важно чтобы был id с названием фильтра, и name который указывает на то, где искать этот фильтр в массиве и нужно ли его обновить.
-  // инпуты minPrice и maxPrice не всчет, так как там не чекбоксы
-  // const dispatch = useAppDispatch();
+
   return (
     <div ref={divRef}>
-      {isModalWindow && searchTableName === "cooler" && (
+      {isModalWindow &&
+        searchTableName === "cooler,liquid_cooling,case_fans" && (
+          <div className="mb-[29px]">
+            <FilterRowContainer
+              element={[{ value: "cooler" }]}
+              elemContainerName={"componentType"}
+              searchTableName={searchTableName}
+            />
+            <FilterRowContainer
+              element={[{ value: "liquid_cooling" }]}
+              elemContainerName={"componentType"}
+              searchTableName={searchTableName}
+            />
+          </div>
+        )}
+      {isModalWindow && searchTableName === "hdd,ssd" && (
         <div className="mb-[29px]">
-          <label className={styles["input-container"]}>
-            <input
-              type="checkbox"
-              data-filtername="cooler"
-              name="componentType"
-              defaultChecked={getDefaultCheckedState("componentType", "cooler")}
-              onClick={(e: any) => {
-                if (e.target.checked) !e.target.checked;
-                handleCheckboxChange(
-                  e.target.name,
-                  e.target.attributes[0].nodeValue,
-                  e.target.checked
-                );
-              }}
-            />
-            <p className="hover:text-[#0260E8]">Кулеры для процессора</p>
-          </label>
-          <label className={styles["input-container"]}>
-            <input
-              type="checkbox"
-              data-filtername="liquid_cooling"
-              name="componentType"
-              defaultChecked={getDefaultCheckedState(
-                "componentType",
-                "liquid_cooling"
-              )}
-              onClick={(e: any) => {
-                if (e.target.checked) !e.target.checked;
-
-                handleCheckboxChange(
-                  e.target.name,
-                  e.target.attributes[0].nodeValue,
-                  e.target.checked
-                );
-              }}
-            />
-            <p className="hover:text-[#0260E8]">
-              Система жидкостного охлаждения (СЖО)
-            </p>
-          </label>
+          <FilterRowContainer
+            element={[{ value: "hdd" }]}
+            elemContainerName={"componentType"}
+            searchTableName={searchTableName}
+          />
+          <FilterRowContainer
+            element={[{ value: "ssd" }]}
+            elemContainerName={"componentType"}
+            searchTableName={searchTableName}
+          />
         </div>
       )}
 
@@ -287,23 +223,8 @@ export const FilterPanel = memo(function FilterPanel({
               type="text"
               name="minPrice"
               placeholder={"0"}
-              defaultValue={
-                searchParams.get("minPrice")?.length !== 0
-                  ? searchParams.get("minPrice") || ""
-                  : "0"
-              }
               onChange={(e: any) => {
-                setPriceFilters((prevFilters: any) => {
-                  const updatedFilters = { ...prevFilters };
-
-                  if (e.target.value === "") {
-                    delete updatedFilters["minPrice"];
-                  } else {
-                    updatedFilters.minPrice = e.target.value * 100;
-                  }
-
-                  return updatedFilters;
-                });
+                setMinPriceFilters(e.target.value);
               }}
             />
           </div>
@@ -312,22 +233,8 @@ export const FilterPanel = memo(function FilterPanel({
             <input
               type="text"
               placeholder={"0"}
-              defaultValue={
-                (searchParams.get("maxPrice")?.length !== 0 &&
-                  searchParams.get("maxPrice")) ||
-                ""
-              }
               onChange={(e: any) => {
-                setPriceFilters((prevFilters: any) => {
-                  const updatedFilters = { ...prevFilters };
-                  if (e.target.value === "") {
-                    delete updatedFilters["maxPrice"];
-                  } else {
-                    updatedFilters.maxPrice = e.target.value * 100;
-                  }
-
-                  return updatedFilters;
-                });
+                setMaxPriceFilters(e.target.value);
               }}
             />
           </div>
@@ -344,8 +251,8 @@ export const FilterPanel = memo(function FilterPanel({
             return (
               <FiltersPopUp title={elem.name} key={elem.id}>
                 <FilterRowContainer
-                  getDefaultCheckedState={getDefaultCheckedState}
-                  handleCheckboxChange={handleCheckboxChange}
+                  // getDefaultCheckedState={getDefaultCheckedState}
+                  // handleCheckboxChange={handleCheckboxChange}
                   element={elem.values}
                   elemContainerName={elem.slug}
                   searchTableName={searchTableName}

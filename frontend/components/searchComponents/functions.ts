@@ -17,63 +17,66 @@ export function createLink(array: any, setLink: any) {
 
   return queryString;
 }
-export function updateFiltersComponentName(
-  searchTableName: string,
-  setFiltersComponentName: (name: string) => void
-): void {
-  const componentNames: Record<string, string> = {
-    processor: "Процессоры",
-    gpu: "Видеокарты",
-    motherboard: "Материнская плата",
-    ram: "Оперативна память",
-    power_supply: "Блок питания",
-    "hdd,ssd": "Хранение данных",
-    case: "Корпус",
-    cooler: "Охлаждение",
-    liquid_cooling: "Охлаждение",
-    "cooler,liquid_cooling": "Охлаждение",
-  };
-
-  setFiltersComponentName(componentNames[searchTableName] || "");
-}
 // export function updateFiltersComponentName(
 //   searchTableName: string,
-//   setFiltersComponentName: any
+//   setFiltersComponentName: (name: string) => void
 // ): void {
-//   //При открытии компонента с фильтрами выберается, что будет отображаться, проц или видеокарта
-//   switch (searchTableName) {
-//     case "processor":
-//       setFiltersComponentName("Процессоры");
-//       break;
-//     case "gpu":
-//       setFiltersComponentName("Видеокарты");
-//       break;
-//     case "motherboard":
-//       setFiltersComponentName("Материнская плата");
-//       break;
-//     case "ram":
-//       setFiltersComponentName("Оперативна память");
-//       break;
-//     case "power_supply":
-//       setFiltersComponentName("Блок питания");
-//       break;
-//     case "hdd,ssd":
-//       setFiltersComponentName("Хранение данных");
-//       break;
-//     case "case":
-//       setFiltersComponentName("Корпус");
-//       break;
-//     case "cooler":
-//       setFiltersComponentName("Охлаждение");
-//       break;
-//     case "liquid_cooling":
-//       setFiltersComponentName("Охлаждение");
-//       break;
-//     case "cooler,liquid_cooling":
-//       setFiltersComponentName("Охлаждение");
-//       break;
-//   }
+//   const componentNames: Record<string, string> = {
+//     processor: "Процессоры",
+//     gpu: "Видеокарты",
+//     motherboard: "Материнская плата",
+//     ram: "Оперативна память",
+//     power_supply: "Блок питания",
+//     "hdd,ssd": "Хранение данных",
+//     case: "Корпус",
+//     cooler: "Охлаждение",
+//     liquid_cooling: "Охлаждение",
+//     "cooler,liquid_cooling": "Охлаждение",
+//   };
+
+//   setFiltersComponentName(componentNames[searchTableName] || "");
 // }
+export function updateFiltersComponentName(
+  searchTableName: string,
+  setFiltersComponentName: any
+): void {
+  //При открытии компонента с фильтрами выберается, что будет отображаться, проц или видеокарта
+  switch (searchTableName) {
+    case "processor":
+      setFiltersComponentName("Процессоры");
+      break;
+    case "gpu":
+      setFiltersComponentName("Видеокарты");
+      break;
+    case "motherboard":
+      setFiltersComponentName("Материнская плата");
+      break;
+    case "ram":
+      setFiltersComponentName("Оперативна память");
+      break;
+    case "power_supply":
+      setFiltersComponentName("Блок питания");
+      break;
+    case "hdd,ssd":
+      setFiltersComponentName("Хранение данных");
+      break;
+    case "case":
+      setFiltersComponentName("Корпус");
+      break;
+    case "cooler":
+      setFiltersComponentName("Охлаждение");
+      break;
+    case "liquid_cooling":
+      setFiltersComponentName("Охлаждение");
+      break;
+    case "cooler,liquid_cooling":
+      setFiltersComponentName("Охлаждение");
+      break;
+    case "cooler,liquid_cooling,case_fans":
+      setFiltersComponentName("Охлаждение");
+      break;
+  }
+}
 
 export function useDebounce<T>(value: T, delay: number) {
   const [debounceValue, setDebounceValue] = useState<T>(value);

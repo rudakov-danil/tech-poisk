@@ -19,14 +19,14 @@ export const OffersComponent = memo(function OffersComponent({
           return <OfferItem key={index} offer={offer} data={data} />;
         })}
       <button
-        className={`w-[215px] mt-[20px]  bg-[#0260E8] text-[white] rounded-[5px] text-[18px] py-[8px] px-[12px] mb-[23px] max-lg:hidden ${
-          data?.offers?.length === 2 && "hidden"
+        className={`w-[215px] mt-[20px]  bg-[#0260E8] ml-auto text-[white] rounded-[38px] text-[18px] py-[8px] px-[12px] mb-[23px] max-lg:hidden ${
+          data?.offers?.length <= 2 && "hidden"
         }`}
         onClick={() => {
           setOffersLimit((prev: boolean) => !prev);
         }}
       >
-        Посмотреть все цены
+        Смотреть все цены
       </button>
     </>
   );

@@ -58,6 +58,10 @@ export const CheckboxInputComponents = memo(function CheckboxInputComponents({
     setIsChecked((prev: boolean) => !prev);
     setIsPendingUpdate(true);
   };
+  const rusNames: { [key: string]: string } = {
+    liquid_cooling: "Система жидкостногоохлаждения (СЖО)",
+    cooler: "Кулеры для процессора",
+  };
 
   return (
     <label className="flex gap-[4px] items-baseline mb-[5px]">
@@ -70,7 +74,10 @@ export const CheckboxInputComponents = memo(function CheckboxInputComponents({
         className="min-w-[15px] min-h-[15px]"
       />
       <p className="text-[20px] font-thin break-all hover:text-[#0260E8]">
-        {elem.value}
+        {rusNames[elem.value] ? rusNames[elem.value] : elem.value}
+        {elem?.value && (
+          <span className="text-[#9E9E9E] ml-[3px]">({elem.count})</span>
+        )}
       </p>
     </label>
   );

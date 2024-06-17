@@ -65,6 +65,7 @@ export default function ProductCard() {
   const digits = params?.split("/")[2];
 
   const [isShowDescription, setIsShowDescription] = useState(true);
+  const [shortDescriptionData, setShortDescriptionData] = useState<any>({});
   const { data, isLoading, isError }: IUseQuery = useQuery(
     "productData",
     getProductData
@@ -83,8 +84,22 @@ export default function ProductCard() {
       console.error(e);
     }
   }
+  async function getShortDescrition() {
+    try {
+      const respone = await fetch(
+        `https://techpoisk.com:8443/components/${digits}?hide_non_short_props=true`
+      );
+      const data = await respone.json();
+
+      setShortDescriptionData(data);
+      return data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
   useEffect(() => {
     getProductData();
+    getShortDescrition();
   }, []);
 
   return (
@@ -99,8 +114,12 @@ export default function ProductCard() {
               <div className={styles.container}>
                 {" "}
                 {data?.pictures && <SelectImage pictures={data?.pictures} />}
-                {data?.propertyCategories && (
-                  <Specifications property={data?.propertyCategories} />
+                {shortDescriptionData?.propertyCategories?.properties && (
+                  <Specifications
+                    property={
+                      shortDescriptionData?.propertyCategories?.properties
+                    }
+                  />
                 )}
               </div>
               {data?.offers && data && (
@@ -124,7 +143,9 @@ export default function ProductCard() {
               )}
             </div>
           </div>
-          <h2 className={`${styles["title"]} mt-[10px] mb-[20px]`}>Характеристики</h2>
+          <h2 className={`${styles["title"]} mt-[10px] mb-[20px]`}>
+            Характеристики
+          </h2>
           <div className="flex items-center gap-[14px] lg:hidden">
             <button
               onClick={() => {
@@ -162,9 +183,7 @@ export default function ProductCard() {
           {isShowDescription && <CommonDescription data={data} />}
           {data?.detail && <h2>{data.detail}</h2>}
 
-
           <h2 className="mt-[50px] text-[28px] font-bold max-lg:hidden">
-
             Цены на {data?.name}
           </h2>
           <div className="w-full border-t-2 border-[#dde1e7] mt-[3px] mb-[20px] max-lg:hidden" />

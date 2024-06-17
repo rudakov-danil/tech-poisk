@@ -17,7 +17,6 @@ export const FilterRowContainer = memo(function FilterRowContainer({
 }: any) {
   const [isShowAll, setIsShowAll] = useState<boolean>(false);
 
-  // console.log(filtersComponentsReducer, "AAAAAAAAAAAAAAA");
   return (
     <>
       <div

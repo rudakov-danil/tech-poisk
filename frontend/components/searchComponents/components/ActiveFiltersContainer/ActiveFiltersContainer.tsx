@@ -23,10 +23,10 @@ interface IFiltersNames {
 }
 
 export const ActiveFiltersContainer = memo(function ActiveFiltersContainer({
-  checkboxFilters,
-  priceFilters,
-  setCheckboxFilters,
-  setPriceFilters,
+  minPriceFilters,
+  setMinPriceFilters,
+  maxPriceFilters,
+  setMaxPriceFilters,
   isModalWindow,
   searchTableName = "",
 }: any) {
@@ -298,12 +298,65 @@ export const ActiveFiltersContainer = memo(function ActiveFiltersContainer({
     power_output: "Мощность",
     modular_cables: "Модульные кабели",
     plus_certification: "Сертификат 80 PLUS",
+    liquid_cooling: "Система жидкостногоохлаждения (СЖО)",
   };
   return (
     <div
       className={`${styles["container"]} overflow-y-auto max-h-[79px] my-[24px] max-lg:my-[13px]`}
     >
       <div className="flex flex-wrap gap-[24px] items-center max-lg:gap-[15px] max-lg:flex-nowrap max-lg:overflow-x-auto">
+        {minPriceFilters && (
+          <div
+            className={`flex items-center gap-[8px] ${
+              isModalWindow ? "px-[9px] py-[6px]" : "px-[22px] py-[10px]"
+            } bg-[#d9d9d9] hover:bg-[#dde1e773] rounded-[33px] select-none`}
+            onClick={() => setMinPriceFilters("")}
+          >
+            <p className="text-[#828282] text-[16px] max-lg:text-[14px] max-lg:whitespace-nowrap">
+              {isModalWindow &&
+                `${rusNames["minPrice"] ? rusNames["minPrice"] : "minPrice"}: `}
+              <span className="text-[black] text-[16px]">
+                {Number(minPriceFilters)}
+              </span>
+            </p>
+
+            {isModalWindow && (
+              <Image
+                className="max-w-max"
+                src={close}
+                width={15}
+                height={15}
+                alt="delete filter icon"
+              />
+            )}
+          </div>
+        )}
+        {maxPriceFilters && (
+          <div
+            className={`flex items-center gap-[8px] ${
+              isModalWindow ? "px-[9px] py-[6px]" : "px-[22px] py-[10px]"
+            } bg-[#d9d9d9] hover:bg-[#dde1e773] rounded-[33px] select-none`}
+            onClick={() => setMaxPriceFilters("")}
+          >
+            <p className="text-[#828282] text-[16px] max-lg:text-[14px] max-lg:whitespace-nowrap">
+              {isModalWindow &&
+                `${rusNames["maxPrice"] ? rusNames["maxPrice"] : "minPrice"}: `}
+              <span className="text-[black] text-[16px]">
+                {Number(maxPriceFilters)}
+              </span>
+            </p>
+
+            {isModalWindow && (
+              <Image
+                className="max-w-max"
+                src={close}
+                width={15}
+                height={15}
+                alt="delete filter icon"
+              />
+            )}
+          </div>
+        )}
         {renderItems.map((elem: any, index: number) => {
           return (
             <div

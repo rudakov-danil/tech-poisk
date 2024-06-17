@@ -5,7 +5,7 @@ export const Specifications = ({ property }: any) => {
     <div className={styles.specificationsContainer}>
       <h3>Краткие характеристики</h3>
       <ul className={styles.ulContainer}>
-        {property[0].properties.map((elem: any) => {
+        {property.map((elem: any) => {
           return (
             <li key={elem.id}>
               <p>
