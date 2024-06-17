@@ -1,0 +1,93 @@
+.title {
+  color: #000;
+
+  /* font-family: SourceSansProRegular; */
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.hline {
+  width: 100%;
+  height: 1px;
+
+  background-color: rgba(158, 158, 158, 0.25);
+  margin-bottom: 17px;
+}
+
+.DescriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 19px;
+}
+
+.DescriptionSecondContainer {
+  display: flex;
+  gap: 12px;
+  /* justify-content: space-between;
+  gap: 100px; */
+}
+.DescriptionBlockTitle {
+  color: #000;
+  /* font-family: SourceSansProRegular; */
+  font-size: 23px;
+  font-style: normal;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+.DescriptionBlock {
+  display: flex;
+  min-width: 374px;
+  flex-direction: column;
+  flex: 1;
+  max-width: 375px;
+  gap: 10px;
+}
+
+.Description {
+  display: flex;
+  flex: 1;
+}
+
+.DescriptionColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+.DescriptionColumn p {
+  color: #000;
+  /* font-family: SourceSansProRegular; */
+  font-size: 19px;
+  font-style: normal;
+  /* line-height: 34px; */
+}
+.DescriptionColumn p {
+  font-weight: 450;
+  flex: 1;
+}
+
+.DescriptionRow {
+  display: flex;
+}
+.DescriptionRow h3 {
+  font-family:  source-sans-pro-light;
+  flex: 2.5;
+  max-width: 210px;
+  font-size: 19px;
+}
+
+.commonColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.DescriptionRow p {
+  font-size: 19px;
+  font-weight: 100;
+}
+.DescriptionRow p span {
+  word-break: break-all;
+  font-size: 19px;
+}

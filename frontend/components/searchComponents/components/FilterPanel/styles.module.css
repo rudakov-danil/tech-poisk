@@ -1,0 +1,91 @@
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  /* max-height: 743px; */
+  overflow: auto;
+}
+.price-blocks-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 23px;
+}
+.price-blocks-container div {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #d9dbdd;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  border-radius: 64px;
+}
+.price-blocks-container div p {
+  color: #bbb;
+
+  /* font-family: SourceSansProRegular; */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.price-blocks-container div input {
+  all: unset;
+  width: 100%;
+  height: 100%;
+  color: black;
+  /* font-family: SourceSansProRegular; */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.price-blocks-container div input::placeholder {
+  color: #bbb;
+}
+.input-container {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+  margin-bottom: 5px;
+}
+.input-container p {
+  color: #000;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.input-container span {
+  color: #9e9e9e;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.show-all-button {
+  all: unset;
+  color: #9e9e9e;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.FilterRowHiding {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.FilterRowHidingMaxHeightSet {
+  overflow-y: hidden;
+  max-height: 137px;
+}
+.FilterRowHidingMaxHeightUnSet {
+  overflow-y: none;
+  height: auto;
+}

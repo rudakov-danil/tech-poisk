@@ -1,0 +1,25 @@
+.catalog-pop-up-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.link:hover {
+  color: #0260e8;
+  text-decoration: underline;
+}
+
+.link-text {
+  font-family: inter-light;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+@media (max-width: 1024px) {
+  .catalog-pop-up-column {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

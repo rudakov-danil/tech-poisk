@@ -1,0 +1,93 @@
+.wrapper {
+  display: flex;
+  gap: 27px;
+}
+.descriptionContainer {
+  width: 290px;
+}
+
+.close {
+  margin-bottom: auto;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image {
+  width: 190px;
+  height: 190px;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: space-between;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+}
+.price {
+  display: flex;
+  flex-direction: column;
+}
+.price h2 {
+  color: #000;
+
+  font-family: SourceSansProRegular;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.price h3 {
+  color: #000;
+
+  font-family: SourceSansProRegular;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 8px;
+  margin-bottom: 17px;
+}
+
+.price p {
+  color: #bababa;
+
+  font-family: SourceSansProRegular;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 9.21px;
+}
+.buttonContainer svg {
+  margin-left: 5px;
+}
+.buttonContainer svg path {
+  fill: #0260e8;
+}
+.buttonContainer button {
+  all: unset;
+  white-space: nowrap;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #0260e8;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 8px 8px 7px;
+  color: #0260e8;
+
+  font-family: SourceSansProRegular;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}

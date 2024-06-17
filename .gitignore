@@ -1,0 +1,8 @@
+.env
+*.gz
+/myenv/
+.idea/
+nginx/ssl/*
+!nginx/ssl/README.*
+ignore/
+.vscode/

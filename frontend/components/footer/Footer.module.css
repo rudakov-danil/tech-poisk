@@ -1,0 +1,41 @@
+.footer {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 24px 15px 9px;
+}
+
+.main,
+.copyright {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.main {
+  padding-bottom: 24px;
+  align-items: center;
+  display: flex;
+  border-bottom: solid 1px white;
+  justify-content: space-between;
+}
+.copyright {
+  padding-top: 19px;
+}
+
+.copyright-text {
+  color: #fff;
+  font-size: 14px;
+}
+@media (max-width: 1024px) {
+  .left-part {
+    flex-direction: column;
+    gap: 22px;
+  }
+  .main {
+    align-items: end;
+  }
+}
+@media (max-width: 640px) {
+  .main {
+    flex-wrap: wrap;
+    justify-content: none;
+  }
+}

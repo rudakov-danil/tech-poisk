@@ -1,0 +1,681 @@
+openapi: "3.1.0"
+info:
+  title: TechPoisk
+  version: "1.0"
+servers:
+  - url: https://techpoisk.com:8443
+    description: Production-сервер
+  - url: http://localhost:8000
+  - url: http://localhost:8443
+paths:
+  /components/:
+    get:
+      tags:
+        - components
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 2
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: number
+            example: 5
+        - name: componentType
+          in: query
+          required: false
+          schema:
+            type: string
+          description: >
+            Можно указывать несколько типов через запятую, например: `?componentType=HDD,SSD`.
+        - name: search
+          in: query
+          schema:
+            type: string
+          required: false
+          description: >
+            Поиск по названию компонента, названию производителя и другим свойствам.
+        - name: ordering
+          in: query
+          schema:
+            type: string
+          required: false
+          description: >
+            Сортировка. Может быть указано любое свойство комплектующей, а также цена (`price`).
+            Чтобы отсортировать в обратном порядке, нужно поставить `-` перед свойством,
+            например: `ordering=-price`, чтобы отсортировать по убыванию цены.
+        - name: minPrice
+          in: query
+          example: 3000_00
+          schema:
+            type: number
+          required: false
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+          example: 15000_00
+          required: false
+        - name: compatibleWith
+          in: query
+          schema:
+            example: 1,2,3
+          required: false
+          description: >
+            Перечисление через запятую компонентов, с которыми должны быть
+            совместимы возвращаемые компоненты.
+        - name: hideIncompatible
+          in: query
+          schema:
+            type: boolean
+            example: false
+          required: false
+          description: >
+            При значении true скрывает несовместимые компоненты. В противном случае
+            у несовместимых компонентов свойство isCompatible принимает значение false.
+            **На данный момент запрос обрабатывается медленно, если не указывать
+            этот параметр.**
+          # TODO: Ускорить запрос и убрать предупреждение здесь
+        - name: numberOfCores
+          in: query
+          schema:
+            type: number
+          example: 4
+          required: false
+          description: >
+            Кроме этого поля возможно любое другое из моделей компонентов.
+            Можно указывать несколько значений через запятую.
+        - name: stat
+          in: query
+          schema:
+            type: boolean
+          description: Убирает из ответа всё, кроме `count`, `minPrice`, `maxPrice`
+        - name: hide_non_short_props
+          in: query
+          schema:
+            type: boolean
+          description: Возвращает только необходимые для укророченой записи Property
+      responses:
+        200:
+          description: >
+            `minPrice`, `maxPrice` - мининимальная и максимальная цена среди всех компонентов,
+            подходящих под запрос, со всех страниц
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: number
+                    example: 4
+                  next:
+                    type: string
+                    example: 'http://localhost:8000/components/?page=3'
+                  previous:
+                    type: string
+                    example: 'http://localhost:8000/components/?page=1'
+                  pageSize:
+                    type: number
+                    example: 20
+                  minPrice:
+                    type: number
+                  maxPrice:
+                    type: number
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/component'
+    post:
+      tags:
+        - components
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Uploaded motherboard"
+                componentType:
+                  type: string
+                  example: "motherboard"
+                properties:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      slug:
+                        type: string
+                        example: "example_mb_property"
+                      value:
+                        type: string
+                        example: "abcd"
+                offers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      price:
+                        type: number
+                        example: 123400
+                      storeId:
+                        type: number
+                        example: 3
+                      buyLink:
+                        type: string
+                        example: "https://dns-shop.ru"
+      responses:
+        200:
+          description: OK
+  /componentPictures/:
+    get:
+      tags:
+        - components
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                id:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+                componentId:
+                  type: number
+                url:
+                  type: string
+    post:
+      tags:
+        - components
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: file
+                componentId:
+                  type: number
+      responses:
+        200:
+          description: OK
+
+  /components/{id}/:
+    get:
+      tags:
+        - components
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/component'
+    put:
+      tags:
+        - components
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Uploaded motherboard"
+                componentType:
+                  type: string
+                  example: "motherboard"
+                properties:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      slug:
+                        type: string
+                        example: "example_mb_property"
+                      value:
+                        type: string
+                        example: "abcd"
+                offers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      price:
+                        type: number
+                        example: 123400
+                      storeId:
+                        type: number
+                        example: 3
+                      buyLink:
+                        type: string
+                        example: "https://dns-shop.ru"
+      responses:
+        200:
+          description: OK
+    patch:
+      tags:
+        - components
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Uploaded motherboard"
+                componentType:
+                  type: string
+                  example: "motherboard"
+                properties:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      slug:
+                        type: string
+                        example: "example_mb_property"
+                      value:
+                        type: string
+                        example: "abcd"
+                offers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      price:
+                        type: number
+                        example: 123400
+                      storeId:
+                        type: number
+                        example: 3
+                      buyLink:
+                        type: string
+                        example: "https://dns-shop.ru"
+      responses:
+        200:
+          description: OK
+  /componentTypes/:
+    get:
+      tags:
+        - components
+      parameters:
+        - $ref: '#/components/parameters/componentTypeHideNonFilterProps'
+        - $ref: '#/components/parameters/componentTypeShowValues'
+        - $ref: '#/components/parameters/componentTypeShowCount'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/componentType'
+
+  /componentTypes/{id}/:
+    get:
+      tags:
+        - components
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/componentTypeHideNonFilterProps'
+        - $ref: '#/components/parameters/componentTypeShowValues'
+        - $ref: '#/components/parameters/componentTypeShowCount'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/componentType'
+  /componentTypeCount/:
+    get:
+      tags:
+        - components
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              type: array
+              items:
+                type: object
+              example: [ { "componentType_Slug": "gpu","count": 1 },{ "componentType_Slug": "motherboard","count": 1 } ]
+  /checkCompatibility/:
+    get:
+      tags:
+        - components
+      parameters:
+        - in: query
+          name: ids
+          required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  incompatble:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: int
+                    example: [ [ 1,2 ],[ 2,3 ],[ 5,6 ] ]
+  /searchHints/:
+    get:
+      tags:
+        - components
+      parameters:
+        - in: query
+          name: search
+          required: true
+        - in: query
+          name: limit
+          required: false
+          type: int
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type:
+                    object
+                example: [ { "component_type__slug": "processor", "name": "Процессор 1" },{ "component_type__slug": "processor", "name": "Процессор 2" } ]
+  /earlyAccessMembers/:
+    get:
+      tags:
+        - users
+      responses:
+        200:
+          description: Ok
+    post:
+      tags:
+        - users
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: str
+                  example: "test@test.com"
+      responses:
+        201:
+          description: Ok
+          content:
+            application/json:
+              id: int
+              earlyAccessToken: str
+              email: str
+              firstName: str
+              lastName: str
+        400:
+          description: Email already exists
+          content:
+            application/json:
+              email: array
+  /retrieveEarlyAccessMember/{token}:
+    get:
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: token
+          type: str
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Not Found
+  /login/:
+    post:
+      tags:
+        - users
+      security:
+        - basicAuth: [ ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              expiry:
+                type: string
+                example: "2024-03-08T02:18:49.208870Z"
+              token:
+                type: string
+                example: "af334bc237c87f5834392833395316360a2910e00914d590c53177ae4394d626"
+
+  /logout/:
+    summary: Удалить текущий токен авторизированного пользователя
+    post:
+      tags:
+        - users
+      security:
+        - bearerAuth: [ ]
+      responses:
+        200:
+          description: OK
+
+  /logoutAll/:
+    summary: Удалить все токены авторизированного пользователя
+    post:
+      tags:
+        - users
+      security:
+        - bearerAuth: [ ]
+      responses:
+        200:
+          description: OK
+components:
+  parameters:
+    componentTypeHideNonFilterProps:
+      name: hideNonFilterProps
+      in: query
+      schema:
+        type: boolean
+        example: false
+      required: false
+      description: >
+        При значении true скрывает свойства, которые не являются фильтрами.
+    componentTypeShowValues:
+      name: showValues
+      in: query
+      schema:
+        example: never (default) | filters | always
+      description: |
+        Значения в порядке увеличения времени ответа:
+        - `never`: не показывать значения свойств. Дефолтное значение.
+        - `filters`: показывать значения только тех свойств, которые являются фильтрами.
+        - `always`: показывать значения свойств.
+    componentTypeShowCount:
+      name: showCount
+      in: query
+      schema:
+        type: boolean
+        example: false
+      required: false
+      description: >
+        При значении true показывает количество значений свойств.
+        Немного увеличивает время ответа.
+        Дефолтное значение `false`.
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >
+        Введите токен, полученный в `/login/`, с префиксом `Token `, например:
+        `Token af334bc237c87f5834392833395316360a2910e00914d590c53177ae4394d626`
+
+  schemas:
+    component:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        componentType:
+          type: string
+          example: motherboard
+        isCompatible:
+          type: bool
+          example: true
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/offer'
+        propertyCategories:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+              name:
+                type: string
+              properties:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    slug:
+                      type: string
+                    isFilter:
+                      type: boolean
+                    value:
+                      type: string
+                      example: any json type
+        pictures:
+          type: array
+          items:
+            $ref: '#/components/schemas/image'
+
+    offer:
+      type: object
+      properties:
+        id: { type: number }
+        price: { type: number }
+        buyLink: { type: string }
+        shop:
+          $ref: '#/components/schemas/shop'
+
+    shop:
+      type: object
+      properties:
+        id: { type: number }
+        name: { type: string, example: 'DNS' }
+        logo:
+          $ref: '#/components/schemas/image'
+
+    image:
+      type: object
+      properties:
+        url: { type: string, example: 'https://example.com/image.png', 'Link to image' }
+        width: { type: number, example: 640 }
+        height: { type: number, example: 480 }
+
+    componentType:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+            example: 1
+          name:
+            type: string
+            example: 'Корпусной вентилятор'
+          slug:
+            type: string
+            example: case_fan
+          isMultiple:
+            type: boolean
+          propertyCategories:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                properties:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                      isFilter:
+                        type: boolean
+                      values:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            value:
+                              example: "All values ever set to this property. Can by any type"
+                            count:
+                              type: number
+                              example: 1

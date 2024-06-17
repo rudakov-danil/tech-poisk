@@ -1,0 +1,22 @@
+.price{
+    font-size: 26px;
+    font-family: inter-regular;
+}
+
+.store {
+    position: relative;
+  }
+
+.store:hover:after {
+    content: "Перейти в магазин";
+    position: absolute;
+    top: -39px;
+    left: -33px;
+    background-color: #d9d9d9;
+    border-radius: 5px;
+    box-shadow: 1px 3px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 5px 12px 5px 12px;
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  

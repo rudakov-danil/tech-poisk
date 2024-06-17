@@ -1,0 +1,10 @@
+media/
+/static/
+
+.idea
+env
+myenv
+.env
+*.sqlite3
+__pycache__
+ignore/

@@ -1,0 +1,238 @@
+.configurator-table-container {
+  padding-top: 18px;
+  border-top: 1px solid rgb(2 96 232 / 25%);
+}
+
+.main-title {
+  font-family: inter-medium;
+  font-size: 32px;
+  font-weight: 450;
+}
+
+.main-part {
+  display: flex;
+  margin-top: 31px;
+  gap: 20px;
+}
+.wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  /* z-index: 2; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: painted;
+}
+
+.configurator-table {
+  border-radius: 5px;
+  /* border: 1px solid rgb(2 96 232 / 25%); */
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.row-title-container {
+  font-family: source-sans-pro-regular;
+  font-size: 20px;
+  white-space: nowrap;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  padding: 25px 19px;
+  gap: 61px;
+  border: 1px solid rgb(2 96 232 / 25%);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.row:hover {
+  background-color: #eaebff;
+  transition: 0.2s;
+}
+
+.row-product-count-text,
+.row-product-adding-text {
+  font-family: source-sans-pro-light;
+  color: #9e9e9e;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.row-product-adding-text-plus {
+  color: black;
+  font-weight: 600;
+  padding-left: 10px;
+}
+
+.row-product-container {
+  display: flex;
+  width: 100%;
+  gap: 50px;
+}
+
+.row-product-adding-part {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.control-panel {
+  font-family: source-sans-pro-semibold;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid #dde1e7;
+  border-radius: 20px;
+  padding: 15px 20px;
+  height: max-content;
+}
+
+.buying-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #0260e8;
+  width: fill-available;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  border-radius: 38px;
+}
+
+.buying-button-text,
+.buying-button-cost {
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+}
+
+.save-config-container {
+  font-weight: 600;
+  font-size: 17px;
+  color: #000;
+}
+.save-config-container,
+.add-to-config-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buying-button:hover {
+  background: rgb(2 96 232 / 80%);
+}
+
+.control-panel-button:hover {
+  background: #ff5252;
+}
+.control-panel-button:hover svg path {
+  fill: white;
+}
+.add-to-config-container {
+  font-weight: 600;
+  font-size: 17px;
+  color: #000;
+}
+
+.save-config-container,
+.add-to-config-container {
+  margin-bottom: 15px;
+}
+
+.control-panel-button {
+  font-family: source-sans-pro-semibold;
+  background: #dde1e7;
+  padding: 10px;
+  border-radius: 5px;
+  border-radius: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.control-panel-button img {
+  min-width: 30px;
+  min-height: 30px;
+}
+
+.buy-modal-mobile {
+  display: none;
+}
+.buying-button-mobile {
+  display: none;
+}
+
+.buy-modal {
+  max-width: 280px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buy-link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: hsl(215, 98%, 46%);
+}
+
+@media (max-width: 1024px) {
+  .buy-modal {
+    display: none;
+  }
+  .buy-modal-mobile {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(2 96 232 / 25%);
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .buying-button-mobile {
+    margin-top: 30px;
+    padding: 10px 20px;
+    border-radius: 22px;
+    background: #0260e8;
+    width: fill-available;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    font-size: 14px;
+  }
+  .buying-button-mobile p {
+    font-size: 14px;
+  }
+  .main-title {
+    font-size: 16px;
+  }
+  .configurator-table {
+    width: 100%;
+  }
+  .control-panel {
+    display: none;
+  }
+  .control-panel-button {
+    padding: 6px;
+  }
+  .control-panel-button img {
+    min-width: 18px;
+    min-height: 18px;
+  }
+  .save-config-container h2 {
+    word-break: break-all;
+  }
+  .add-to-config-container h2 {
+    word-break: break-all;
+  }
+}

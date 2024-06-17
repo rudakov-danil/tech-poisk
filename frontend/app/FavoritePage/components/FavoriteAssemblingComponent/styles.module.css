@@ -1,0 +1,111 @@
+.container {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  /* gap: 101px; */
+  align-items: center;
+
+  border-bottom: 1px solid #6eb6ff9d;
+}
+
+.second-container {
+  display: flex;
+  gap: 37px;
+  align-items: center;
+}
+
+.description-container {
+  display: flex;
+  align-items: baseline;
+}
+.description {
+  margin-right: 20px;
+}
+.description h2 {
+  color: #000;
+
+  /* font-family: SourceSansProRegualar; */
+
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  word-break: break-all;
+}
+.description p {
+  color: #7d7d7d;
+  word-break: break-all;
+
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.price {
+  color: #000;
+  text-wrap: nowrap;
+  /* font-size: 22px; */
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  /* margin-right: 100px; */
+}
+.buttons-container {
+  display: flex;
+  gap: 9px;
+}
+.button {
+  all: unset;
+  gap: 9px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #0260e8;
+  height: 51px;
+  min-width: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: all 0.2s;
+}
+.button:hover {
+  background-color: #3f8efd;
+}
+
+.heart-button {
+  background-color: #ff5252 !important;
+  transition: all 0.2s;
+}
+.heart-button:hover {
+  background-color: #ff8b8b !important;
+}
+
+.checkbox-style {
+  min-width: 16px !important;
+  min-height: 16px !important;
+}
+
+@media (max-width: 1024px) {
+  .button {
+    font-size: 11px;
+    height: auto;
+    padding: 4px 9px;
+    border-radius: 5px;
+  }
+  .graph-button {
+    display: none !important;
+  }
+  .heart-button {
+    display: none !important;
+  }
+  .setting-button {
+    display: none !important;
+  }
+}

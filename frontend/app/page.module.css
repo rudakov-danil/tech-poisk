@@ -1,0 +1,19 @@
+.home {
+  padding-top: 28px;
+}
+
+.main {
+  margin-top: 31px;
+  margin-bottom: 120px;
+}
+
+.title-page {
+  font-family: source-sans-pro-semibold;
+  font-size: 40px;
+}
+
+@media (max-width: 1024px) {
+  .title-page {
+    font-size: 20px;
+  }
+}

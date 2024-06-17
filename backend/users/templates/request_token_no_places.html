@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Участие в программе раннего доступа</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <style type="text/css">
+    u + .body .gmail-blend-screen { background:#000; mix-blend-mode:screen; }
+    u + .body .gmail-blend-difference { background:#000; mix-blend-mode:difference; }
+
+    * {
+      font-family: "Source Sans 3", sans-serif !important;
+    }
+
+    .container {
+      font-family: "Source Sans 3", sans-serif !important;
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: 400px) {
+    	.container {
+    		font-size: 14px;
+    	}
+    }
+
+    .main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 50px 25px;
+    }
+
+    .main > * {
+      margin-bottom: 40px;
+    }
+
+    .image-container {
+      width: 100%;
+    }
+
+    .big-text {
+      font-size: 1.6em;
+    }
+  </style>
+</head>
+<body class="body">
+  <div class="container" style="background:#252526; background-image:linear-gradient(#252526,#252526); color:#ffffff;">
+    <div class="main">
+      <div class="image-container">
+        <img src="{{ BASE }}{% static 'logo.png' %}" width="274" height="82" alt="">
+      </div>
+      <div class="gmail-blend-screen">
+        <div class="gmail-blend-difference">
+          <p class="big-text">Уважаемый пользователь!</p>
+
+          <p>
+            Мы благодарим вас за интерес к нашему сервису и высоко ценим ваше желание принять участие в закрытом тестировании.
+          </p>
+
+          <p>
+            К сожалению, на данный момент все места для участия в нём уже заняты. Мы получили большое количество заявок, и нам пришлось ограничить число пользователей для обеспечения качественного тестирования и отладки нашего сервиса.
+          </p>
+
+          <p>
+            Однако, мы очень хотим встретиться с вами позже! Количество мест со временем будет увеличиваться, и мы отправим вам новый код доступа. Чтобы получить его раньше остальных, вы можете пройти <a href="https://forms.gle/L5QH7avGWrbmjrqP6">опрос</a>.
+          </p>
+
+          <p>
+            Кроме этого, официальный запуск сервиса планируется в ближайший месяц. Как только дата релиза будет определена, мы сразу сообщим вам об этом, чтобы вы смогли одними из первых воспользоваться нашим сервисом.
+          </p>
+
+          <p>
+            Мы благодарим вас за проявленное терпение и понимание. Оставайтесь на связи – мы обязательно уведомим вас о дате официального открытия сервиса!
+          </p>
+
+          <p>
+            С наилучшими пожеланиями,<br>
+            Команда TechPoisk
+          </p>
+        </div>
+      </div>
+      <div>
+        <img src="{{ BASE }}{% static 'request_token_no_places/kazakh_mrincredible_meme.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+</body>
+</html>

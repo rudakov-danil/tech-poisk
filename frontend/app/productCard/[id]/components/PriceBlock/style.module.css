@@ -1,0 +1,164 @@
+.container {
+  border-radius: 13px;
+  background: white;
+  max-width: 435px;
+  width: 100%;
+  padding: 29px 17px 19px 19px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  border: 1px solid #dde1e7;
+}
+
+.price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(10px, 5vw, 161px);
+}
+
+.price p {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.price span {
+  font-family: inter-regular;
+  color: #000;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* .price button {
+  height: 51px;
+  width: 51px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #0260e8;
+} */
+
+.sellersContainer {
+  display: flex;
+  gap: 30px;
+
+  /* justify-content: space-between; */
+}
+
+.sellersContainer p {
+  flex: 1;
+}
+
+.sellersContainer div {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex: 1;
+}
+
+.sellersConfiguratorButton {
+  border-radius: 50%;
+  border: 1.5px solid #ff5252;
+  padding: 8px;
+  background-color: transparent;
+
+  justify-content: center;
+  user-select: none;
+  align-items: center;
+  display: flex;
+}
+.sellersConfiguratorButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sellersBuyButton {
+  justify-content: center;
+  user-select: none;
+  align-items: center;
+  display: flex;
+  background-color: #0260e8;
+  color: white;
+  text-align: center;
+  padding: 9px 10px;
+  border-radius: 23px;
+}
+
+.sellersShop {
+  flex: 2;
+  align-items: center;
+  color: #000;
+
+  /* font-family: Source Sans Pro; */
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+  display: flex;
+}
+
+.sellersPrice {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+  align-items: center;
+  display: flex;
+}
+
+.sellersBuyButton p {
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.sellersConfiguratorButton {
+  position: relative;
+}
+.sellersConfiguratorButton:hover:after {
+  content: "Добавить в конфигуратор";
+  position: absolute;
+  top: -39px;
+  left: -102px;
+  background-color: #d9d9d9;
+  border-radius: 5px;
+  box-shadow: 1px 3px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 5px 12px 5px 12px;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.ButtonNotyfication {
+  width: max-content;
+  text-wrap: wrap;
+  background-color: #d9d9d9;
+  position: absolute;
+  bottom: 35px;
+  border-radius: 13px;
+  padding: 5px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    background: none;
+    box-shadow: none;
+    padding: 10px;
+
+    gap: 11px;
+  }
+}

@@ -1,0 +1,11 @@
+.title {
+  font-size: clamp(20px, 0.55rem + 1vw, 28px);
+  border-bottom: 1px solid #C8CACD;
+  padding-bottom: 6px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}

@@ -1,0 +1,82 @@
+services:
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_NAME} -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 8
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - docker_network
+    # Uncomment for database profiling
+    # command: ["postgres", "-c", "log_min_duration_statement=0", "-c", "log_statement=all"]
+
+  backend:
+    build:
+      context: backend
+    ports:
+      - 8000:8000
+    env_file:
+      .env
+    environment:
+      DB_HOST: database
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./backend/static:/usr/src/app/static
+      - ./backend/media:/usr/src/app/media
+    networks:
+      - docker_network
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 4001:8080
+    volumes:
+      - ./swagger:/usr/share/nginx/html/doc
+    environment:
+      API_URL: doc/openapi.yml
+    restart: unless-stopped
+
+  frontend:
+    image: pmakarov04/techpoisk-frontend
+    build:
+      context: frontend
+      network: host
+    depends_on:
+      - backend
+    ports:
+      - 80:3000
+    env_file:
+      frontend/.env
+    networks:
+      - docker_network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 8443:8443
+      - 2053:2053
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./backend/static:/usr/share/nginx/html/static
+      - ./backend/media:/usr/share/nginx/html/media
+
+volumes:
+  database_data:
+
+networks:
+  docker_network:
+    driver: bridge

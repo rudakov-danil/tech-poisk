@@ -1,0 +1,44 @@
+.heart-svg-container:hover svg path {
+  transition: 0.2s;
+  fill: #ff5252;
+  background-color: #ff5252;
+}
+
+.price {
+  font-size: 24px;
+  font-family: source-sans-pro-semibold;
+}
+
+.heart-hover {
+  transition: all 0.5s;
+  min-height: 30px;
+  min-width: 30px;
+}
+
+.graph-img {
+  transition: all 0.5s;
+  min-height: 30px;
+  min-width: 30px;
+}
+
+.heart-hover:hover {
+  transform: scale(1.2);
+}
+
+.graph-img:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 672px) {
+  .heart-hover {
+    transition: all 0.5s;
+    min-height: 23px;
+    min-width: 23px;
+  }
+
+  .graph-img {
+    transition: all 0.5s;
+    min-height: 23px;
+    min-width: 23px;
+  }
+}
