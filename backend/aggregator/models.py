@@ -431,7 +431,7 @@ class PropertyProto(OrderedModel):
                 name='unique_property_proto'
             )
         ]
-        indexes = [models.Index(fields=["slug"])]
+
     def clean(self):
         same_count = PropertyProto.objects.filter(
             slug=self.slug,
@@ -503,7 +503,6 @@ class Property(models.Model):
 
     def __str__(self):
         return f"{self.property_proto.name} on {self.component.name}"
-
 
 
 class ExistingPropertyValue(models.Model):

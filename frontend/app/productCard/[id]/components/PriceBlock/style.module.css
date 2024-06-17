@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: clamp(10px, 5vw, 161px);
+  /* gap: clamp(10px, 5vw, 161px); */
 }
 
 .price p {
@@ -92,7 +92,7 @@
   background-color: #0260e8;
   color: white;
   text-align: center;
-  padding: 9px 10px;
+  padding: 8px 16px;
   border-radius: 23px;
 }
 

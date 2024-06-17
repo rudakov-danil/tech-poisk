@@ -216,11 +216,6 @@ class ComponentsDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Component.objects.all()
     serializer_class = ComponentSerializer
 
-    def get_serializer_context(self, *args, **kwargs):
-        context = super().get_serializer_context(*args, **kwargs)
-        context['hide_non_short_props'] = json.loads(self.request.query_params.get('hide_non_short_props', 'false'))
-        return context
-
 
 class ComponentTypesContextMixin(generics.GenericAPIView):
     def get_serializer_context(self, *args, **kwargs):

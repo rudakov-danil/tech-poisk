@@ -107,7 +107,7 @@ export function ConfiguratorTable() {
         if (userComponentsList[category].length === 0) {
           return;
         } else {
-          userComponentsList[category].map((component: any) => {
+          userComponentsList[category]?.map((component: any) => {
             setBuyModalData((prev: IBuyModalData[]) => {
               localStorage.setItem(
                 "buyComponentsData",

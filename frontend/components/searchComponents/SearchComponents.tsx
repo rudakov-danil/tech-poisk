@@ -51,7 +51,8 @@ export const SearchComponents = memo(function SearchComponents({
   const searchParams = useSearchParams();
   const [link, setLink] = useState("");
   const [checkboxFilters, setCheckboxFilters] = useState([]);
-  const [priceFilters, setPriceFilters] = useState<any>([]);
+  const [minPriceFilters, setMinPriceFilters] = useState<string>("");
+  const [maxPriceFilters, setMaxPriceFilters] = useState<string>("");
   const [filtersComponentName, setFiltersComponentName] = useState<string>(
     isModalWindow
       ? ""
@@ -127,6 +128,11 @@ export const SearchComponents = memo(function SearchComponents({
   }, [filtersComponentsReducer[searchTableName]]);
 
   function getAdditionalyParamsForLink() {
+    const minPrice =
+      minPriceFilters !== "" ? `&minPrice=${minPriceFilters}00` : "";
+    const maxPrice =
+      maxPriceFilters !== "" ? `&maxPrice=${maxPriceFilters}00` : "";
+
     const newLink =
       link == ""
         ? createLink(
@@ -143,7 +149,7 @@ export const SearchComponents = memo(function SearchComponents({
       : "";
 
     if (isModalWindow) {
-      return `?page=${page}${
+      return `?page=${page}${minPrice}${maxPrice}${
         searchOnlyCompatible ? isCompatibleIds : ""
       }&componentType=${searchTableName}&${additionalSorting}${
         newLink === "" ? "" : `&${newLink}`
@@ -152,7 +158,7 @@ export const SearchComponents = memo(function SearchComponents({
       }`;
     } else {
       return (
-        `?page=${page}${
+        `?page=${page}${minPrice}${maxPrice}${
           searchOnlyCompatible ? isCompatibleIds : ""
         }&${additionalSorting}${newLink === "" ? "" : `&${newLink}`}${
           searchInput === "" ? "" : `&search=${searchInput}`
@@ -199,7 +205,13 @@ export const SearchComponents = memo(function SearchComponents({
   useEffect(() => {
     setComponentsList([]);
     refetch();
-  }, [link, additionalSorting, searchOnlyCompatible]);
+  }, [
+    link,
+    additionalSorting,
+    searchOnlyCompatible,
+    minPriceFilters,
+    maxPriceFilters,
+  ]);
   useEffect(() => {
     updateFiltersComponentName(searchTableName, setFiltersComponentName);
   }, [searchTableName]);
@@ -215,7 +227,13 @@ export const SearchComponents = memo(function SearchComponents({
     setComponentsList([]);
     setPage(1);
     // }, 1000);
-  }, [checkboxFilters, priceFilters, additionalSorting, compatibleIds.id]);
+  }, [
+    checkboxFilters,
+    minPriceFilters,
+    maxPriceFilters,
+    additionalSorting,
+    compatibleIds.id,
+  ]);
 
   const { ref, inView, entry } = useInView({
     /* Optional options */
@@ -469,8 +487,10 @@ export const SearchComponents = memo(function SearchComponents({
             }
             checkboxFilters={checkboxFilters}
             setCheckboxFilters={setCheckboxFilters}
-            priceFilters={priceFilters}
-            setPriceFilters={setPriceFilters}
+            minPriceFilters={minPriceFilters}
+            setMinPriceFilters={setMinPriceFilters}
+            maxPriceFilters={maxPriceFilters}
+            setMaxPriceFilters={setMaxPriceFilters}
             isModalWindow={isModalWindow}
             getComponents={getComponents}
             handleSearchInputChange={handleSearchInputChange}
@@ -503,8 +523,10 @@ export const SearchComponents = memo(function SearchComponents({
               }
               checkboxFilters={checkboxFilters}
               setCheckboxFilters={setCheckboxFilters}
-              priceFilters={priceFilters}
-              setPriceFilters={setPriceFilters}
+              minPriceFilters={minPriceFilters}
+              setMinPriceFilters={setMinPriceFilters}
+              maxPriceFilters={maxPriceFilters}
+              setMaxPriceFilters={setMaxPriceFilters}
               isModalWindow={isModalWindow}
               getComponents={getComponents}
               handleSearchInputChange={handleSearchInputChange}
@@ -548,9 +570,11 @@ export const SearchComponents = memo(function SearchComponents({
               <div className={""}>
                 <ActiveFiltersContainer
                   checkboxFilters={checkboxFilters}
-                  priceFilters={priceFilters}
+                  minPriceFilters={minPriceFilters}
+                  setMinPriceFilters={setMinPriceFilters}
+                  maxPriceFilters={maxPriceFilters}
+                  setMaxPriceFilters={setMaxPriceFilters}
                   setCheckboxFilters={setCheckboxFilters}
-                  setPriceFilters={setPriceFilters}
                   isModalWindow={isModalWindow}
                   searchTableName={searchTableName}
                 />
@@ -561,9 +585,11 @@ export const SearchComponents = memo(function SearchComponents({
               <div>
                 <ActiveFiltersContainer
                   checkboxFilters={checkboxFilters}
-                  priceFilters={priceFilters}
                   setCheckboxFilters={setCheckboxFilters}
-                  setPriceFilters={setPriceFilters}
+                  minPriceFilters={minPriceFilters}
+                  setMinPriceFilters={setMinPriceFilters}
+                  maxPriceFilters={maxPriceFilters}
+                  setMaxPriceFilters={setMaxPriceFilters}
                   isModalWindow={isModalWindow}
                 />
               </div>

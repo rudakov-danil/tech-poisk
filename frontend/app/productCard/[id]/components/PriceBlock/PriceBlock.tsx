@@ -61,13 +61,13 @@ export const PriceBlock = ({ offers, data }: any) => {
       );
     } else {
       return (
-        <p className="max-lg:text-[20px] font-extrabold whitespace-nowrap">
+        <p className="max-lg:text-[20px] !font-extrabold whitespace-nowrap">
           от{" "}
-          <span className="max-lg:text-[24px]">
+          <span className="max-lg:text-[24px] !font-extrabold">
             {sortedPrices[0].toLocaleString()}₽
           </span>{" "}
           до{" "}
-          <span className="max-lg:text-[24px]">
+          <span className="max-lg:text-[24px] !font-extrabold">
             {sortedPrices[sortedPrices.length - 1].toLocaleString()}₽
           </span>
         </p>
